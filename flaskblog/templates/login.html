@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Registration Page{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mt-5 mx-auto">
+            <div class="card">
+                <h5 class="h4 card-header font-weight-normal">Login</h5>
+                <span class="help-block ml-3">Note: User info is the same across all of my project sites.</span>
+                <div class="card-body">
+                    <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        <div class="form-group">
+                            {{ form.username.label(class="form-control-label") }}
+                            {% if form.username.errors %}
+                            {{ form.usernameil(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.username.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.username(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.password.label(class="form-control-label") }}
+                            {% if form.password.errors %}
+                            {{ form.password(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.password(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                        <!--div class="form-check">
+                                {{ form.remember(class="form-check-input") }}
+                                {{ form.remember.label(class="form-check-label") }}
+                            </div-->
+                        <div class="form-group">
+                            {{ form.submit(class="btn btn-primary btn-lg btn-block") }}
+                        </div>
+                    </form>
+                    <div class="border-top pt-3">
+                        <small class="text-muted">
+                            <a class="ml-2">Don't Have An Existing Account?</a><a class="ml-2"
+                                href="{{ url_for('register') }}">Sign Up</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

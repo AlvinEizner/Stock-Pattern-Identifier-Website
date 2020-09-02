@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+            <div class="form-group row">
+                <h1 class="ml-3">Enter the symbol/ticker of the stock you would like to scan:</h1>
+                <div class="col-2">
+                    {% if form.stock.errors %}
+                        {{ form.stock(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.stock.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.stock(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-success btn-lg") }}
+                </div>
+                <span class="help-block ml-3">Note: a valid ticker would include 'AAPL' or 'aapl', but not 'Apple'.</span>
+            </div>
+        {% if result %}
+            <h5>{{result}}.</h5>
+            <img src="data:image/png;base64,{{img}}"/>
+            <!--img src='data:image/png;base64,{{data}}' style="width:100%;max-width:800px" class = "align-center"/-->
+        {% endif %}
+    </form>
+</div>
+<br>
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <div class="card">
+            <h5 class="h4 card-header font-weight-normal">More Information</h5>
+                <div class="card-body">
+                    <p class="ml-3 md-2">Patterns that can be identified currently are the <a href="https://www.investopedia.com/terms/t/three_white_soldiers.asp" target="_blank">Three White Soldiers</a>, 
+                        <a href="https://www.investopedia.com/terms/t/three_black_crows.asp" target="_blank">Three Black Crows</a>, 
+                        <a href="https://www.investopedia.com/terms/b/bullishengulfingpattern.asp" target="_blank">Bullish Engulfing</a>, 
+                        <a href="https://www.investopedia.com/terms/b/bearishengulfingp.asp" target="_blank">Bearish Engulfing</a>, 
+                        and <a href="https://www.investopedia.com/terms/s/shootingstar.asp" target="_blank">Shooting Star</a>. 
+                        <br>Click on the buttons below to learn more about these patterns.
+                    </p>
+                    <!-- Buttons trigger modal -->
+                    <button type="button" class="btn btn-primary ml-3" data-toggle="modal" data-target="#ws">3 White Soldiers</button>
+                    <button type="button" class="btn btn-primary ml-3" data-toggle="modal" data-target="#bc">3 Black Crows</button>
+                    <button type="button" class="btn btn-primary ml-3" data-toggle="modal" data-target="#bullEngulf">Bullish Engulfing</button>
+                    <button type="button" class="btn btn-primary ml-3" data-toggle="modal" data-target="#bearEngulf">Bearish Engulfing</button>
+                    <button type="button" class="btn btn-primary ml-3" data-toggle="modal" data-target="#shStar">Shooting Star</button>
+                    <!-- Modals -->
+                    <div class="modal fade" id="ws" tabindex="-1" role="dialog" aria-labelledby="wsLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="wsLabel">Three White Soldiers</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            This pattern occurs after a downtrend in the stock price, and it signifies a reversal. 
+                            Essentially, the pattern suggests that the stock will continue with its recent upward trajectory.
+                            The pattern can be easily identified by three green or white candles (when the stock closed at a higher price than it opened).
+                            <img src="{{url_for('static', filename='images/ws.jpg')}}" style="width:100%;max-width:800px" class = "align-center"/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="modal fade" id="bc" tabindex="-1" role="dialog" aria-labelledby="bcLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="bcLabel">Three Black Crows</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                This pattern occurs after a uptrend in the stock price, and it signifies a reversal. 
+                                Essentially, the pattern suggests that the stock will continue with its recent downward trajectory.
+                                The pattern can be easily identified by three red candles (when the stock closed at a lower price than it opened).
+                                <img src="{{url_for('static', filename='images/bc.png')}}" style="width:100%;max-width:800px" class = "align-center"/>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    <div class="modal fade" id="bullEngulf" tabindex="-1" role="dialog" aria-labelledby="bullEngulfLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="bullEngulfLabel">Bullish Engulfing</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body align-center">
+                                    This pattern occurs after a downtrend in the stock price, and it signifies a reversal. 
+                                    Essentially, the pattern suggests that the stock may begin an upward trajectory.
+                                    The pattern can be easily identified by a red candle (when the stock closed at a lower price than it opened)
+                                    that is directly followed by a larger green or white candle (when the stock closed at a higher price than it opened).
+                                    <img src="{{url_for('static', filename='images/bullengulf.jpg')}}" style="width:100%;max-width:800px" class = "align-center"/>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="bearEngulf" tabindex="-1" role="dialog" aria-labelledby="bearEngulfLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="bearEngulfLabel">Bearish Engulfing</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body align-center">
+                                    This pattern occurs after a uptrend in the stock price, and it signifies a reversal. 
+                                    Essentially, the pattern suggests that the stock may begin a downward trajectory.
+                                    The pattern can be easily identified by a green or white candle (when the stock closed at a higher price than it opened)
+                                    that is directly followed by a larger red candle (when the stock closed at a lower price than it opened).
+                                    <img src="{{url_for('static', filename='images/bearengulf.jpg')}}" style="width:100%;max-width:800px" class = "align-center"/>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="shStar" tabindex="-1" role="dialog" aria-labelledby="shStarLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="shStarLabel">Shooting Star</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body align-center">
+                                    This pattern occurs after a uptrend in the stock price, and it signifies a reversal. 
+                                    Essentially, the pattern suggests that the stock may begin a downward trajectory.
+                                    The pattern can be easily identified by a candle with its wick at least twice as large as its body.
+                                    <img src="{{url_for('static', filename='images/shstar.gif')}}" style="width:100%;max-width:800px" class = "align-center"/>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p></p>
+                    <p class="ml-3">
+                        It is also important to note that even if a pattern is identified, its prediction may not come to fruition. For example, if a
+                        Bearish Englufing candle stick is identified on August 17th, but contrary to expectations the stock's price continues to rise, this is not the
+                        fault of the program. Rather, in this scenario, the Bearish Engulfing trading pattern was unable to make an accurate forecast.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
